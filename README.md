@@ -14,6 +14,7 @@ A TypeScript utility library that provides functions for recursively sorting obj
 
 ```bash
 deno add jsr:@mofax/sorted-stringify
+npx jsr add @mofax/sorted-stringify
 ```
 
 ## Usage
@@ -26,9 +27,9 @@ Recursively sorts the keys of an object or elements of an array.
 import { sortObject } from "@mofax/sorted-stringify";
 
 const obj = {
-  z: 1,
-  a: { c: 3, b: 2 },
-  array: [{ b: 2, a: 1 }, 3]
+	z: 1,
+	a: { c: 3, b: 2 },
+	array: [{ b: 2, a: 1 }, 3],
 };
 
 const sortedObj = sortObject(obj);
@@ -46,12 +47,12 @@ console.log(sortedObj);
 Sorts object keys recursively and returns a deterministic JSON string.
 
 ```typescript
-import { stringify }from "@mofax/sorted-stringify";
+import { stringify } from "@mofax/sorted-stringify";
 
 const obj = {
-  z: 1,
-  a: { c: 3, b: 2 },
-  array: [{ b: 2, a: 1 }, 3]
+	z: 1,
+	a: { c: 3, b: 2 },
+	array: [{ b: 2, a: 1 }, 3],
 };
 
 const jsonString = stringify(obj);

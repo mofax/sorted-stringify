@@ -1,3 +1,5 @@
+import { isTypedArray } from "./util";
+
 type AnyObject = { [key: string]: unknown };
 /**
  * Recursively sorts the keys of an object or elements of an array.
@@ -27,20 +29,24 @@ type AnyObject = { [key: string]: unknown };
  * ```
  */
 export function sortObject<T>(obj: T): T {
-  if (obj == null || typeof obj !== "object") {
-    return obj;
-  }
+	if (obj == null || typeof obj !== "object") {
+		return obj;
+	}
 
-  if (Array.isArray(obj)) {
-    return obj.map(sortObject) as T;
-  }
+	if (isTypedArray(obj)) {
+		return obj as T;
+	}
 
-  return Object.entries(obj)
-    .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
-    .reduce((sortedObj: AnyObject, [key, value]) => {
-      sortedObj[key] = sortObject(value);
-      return sortedObj;
-    }, {}) as T;
+	if (Array.isArray(obj)) {
+		return obj.map(sortObject) as T;
+	}
+
+	return Object.entries(obj)
+		.sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+		.reduce((sortedObj: AnyObject, [key, value]) => {
+			sortedObj[key] = sortObject(value);
+			return sortedObj;
+		}, {}) as T;
 }
 
 /**
@@ -67,6 +73,6 @@ export function sortObject<T>(obj: T): T {
  * ```
  */
 export function stringify(value: unknown): string {
-  if (value === undefined) throw new Error("Cannot stringify undefined");
-  return JSON.stringify(sortObject(value));
+	if (value === undefined) throw new Error("Cannot stringify undefined");
+	return JSON.stringify(sortObject(value));
 }
